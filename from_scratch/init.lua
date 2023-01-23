@@ -1,8 +1,20 @@
--- Run 'plugins.lua' if exists
-local config_path = vim.fn.stdpath 'config' .. '/lua/plugins.lua'
-if vim.fn.findfile(config_path) then
-  require('plugins')
+-- [[ lazy.nvim ]]
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+
+vim.opt.rtp:prepend(lazypath)
+-- Load all *.lua within ~/.config/nvim/lua/plugins/
+require("lazy").setup("plugins")
 
 -- Run 'keymaps.lua' if exists
 local keymap_path = vim.fn.stdpath 'config' .. '/lua/keymaps.lua'
@@ -44,7 +56,7 @@ set.smartcase = true
 
 -- [[ Display invisible characters ]]
 -- turn on: set list
--- turn off: set list!
+-- turn off: set list!-- Mappings.
 set.listchars = {eol = '↲', tab = '--▸', space = '·', trail = '·'}
 
 -- [[ pop up menu ]]
@@ -101,12 +113,6 @@ vim.opt.undofile = true
 vim.cmd([[
 " autoread and load file when focus on buffer
 au FocusGained,BufEnter * :silent! !
-
-" Vertical split on help
-augroup vimrc_help
-    autocmd!
-    autocmd BufEnter *.txt if &buftype == 'help' | wincmd L | endif
-augroup END
 ]])
 
 --[[ Setup highlight, match function will call per buffer.
