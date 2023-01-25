@@ -33,7 +33,7 @@ set.colorcolumn = '80'
 set.mouse = 'a'
 
 set.syntax = 'on'
-set.termguicolors = true
+vim.opt.termguicolors = true
 
 set.completeopt = 'menuone,noselect'
 
@@ -57,7 +57,9 @@ set.smartcase = true
 -- [[ Display invisible characters ]]
 -- turn on: set list
 -- turn off: set list!-- Mappings.
-set.listchars = {eol = '↲', tab = '--▸', space = '·', trail = '·'}
+-- set.listchars = {eol = '↲', tab = '--▸', space = '·', trail = '·'}
+set.listchars = { trail = '·' }
+vim.opt.list = true
 
 -- [[ pop up menu ]]
 set.pumheight = 20
@@ -118,17 +120,17 @@ au FocusGained,BufEnter * :silent! !
 --[[ Setup highlight, match function will call per buffer.
      Otherwise it will not work.
 --]]
-vim.cmd([[
-  highlight ExtraWhitespace ctermbg=LightMagenta guibg=LightMagenta
-]])
+-- vim.cmd([[
+--   highlight ExtraWhitespace ctermbg=LightMagenta guibg=LightMagenta
+-- ]])
 -- Ensure trailing white spaces will be highlighted.
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-  pattern = { "*" },
-  command = [[match ExtraWhitespace /\s\+$/]]
-})
+-- vim.api.nvim_create_autocmd({ "BufEnter" }, {
+--   pattern = { "*" },
+--   command = [[match ExtraWhitespace /\s\+$/]]
+-- })
 
 --[[ User Created Commands ]]
-vim.api.nvim_create_user_command('TrimBlank', function()
+vim.api.nvim_create_user_command('Trimblank', function()
   vim.cmd([[
     " Replace multiple blank lines with a single blank line
     silent! %s/\(\n\n\)\n\+/\1/
@@ -139,7 +141,7 @@ vim.api.nvim_create_user_command('TrimBlank', function()
   ]])
 end, {})
 
-vim.api.nvim_create_user_command('TrimSpace', function()
+vim.api.nvim_create_user_command('Trimspace', function()
   vim.cmd([[
     " Remove trailing white spaces
     %s/\s\+$//e
