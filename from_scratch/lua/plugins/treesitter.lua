@@ -12,22 +12,22 @@ return {
         'lua',
         'python',
         'markdown',
+        'go',
         -- Web development
         'html',
         'css',
         'typescript',
         'javascript',
         'json',
-        -- SDI
+        -- IaC
+        'dockerfile',
         'hcl',
         'yaml',
-
-        'go',
       },
       highlight = { enable = true },
       indent = { enable = true },
     },
-    config = function(plugin, opts)
+    config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
     end
   }
