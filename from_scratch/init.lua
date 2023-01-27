@@ -37,6 +37,8 @@ vim.opt.termguicolors = true
 
 set.completeopt = 'menuone,noselect'
 
+vim.opt.exrc = true -- Enable local directory settings
+
 -- [[ Tab & Indent ]]
 set.expandtab = true
 set.shiftwidth = 2
@@ -55,10 +57,7 @@ set.ignorecase = true
 set.smartcase = true
 
 -- [[ Display invisible characters ]]
--- turn on: set list
--- turn off: set list!-- Mappings.
--- set.listchars = {eol = '↲', tab = '--▸', space = '·', trail = '·'}
-set.listchars = { trail = '·' }
+set.listchars = { trail = '·', tab = '» ' }
 vim.opt.list = true
 
 -- [[ pop up menu ]]
