@@ -10,7 +10,13 @@ return {
     init = function()
       vim.opt.termguicolors = true
       require("bufferline").setup{}
-    end
+    end,
+    keys = {
+      {"<Leader>Z", ":write<CR>:bprevious<CR>:bdelete #<CR><C-l>", desc = 'Save and close current buffer'},
+      {"<Leader>q", ":bprevious<CR>:bdelete #<CR><C-l>", desc = 'Close current buffer'},
+      {"<S-l>", ":BufferLineCycleNext<CR>", desc = "Next Buffer"},
+      {"<S-h>", ":BufferLineCyclePrev<CR>", desc = "Prev Buffer"}
+    }
   },
   { -- File explorer
     "nvim-neo-tree/neo-tree.nvim",
@@ -21,7 +27,14 @@ return {
       "MunifTanjim/nui.nvim",
     },
     opts = {
-      close_if_last_window = true
+      close_if_last_window = true,
+      filesystem = {
+        filtered_items = {
+          never_show = {
+            ".git"
+          }
+        }
+      }
     },
     keys = {
       { "<Leader>e", "<cmd>Neotree toggle<cr>", desc = "Neotree" }
@@ -55,4 +68,22 @@ return {
       require('Comment').setup()
     end
   },
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    config = function()
+      local wk = require("which-key")
+      wk.register({
+        mode = { "n", "v" },
+        ["g"] = { name= "+goto" },
+        ["<Leader>"] = {
+          name = "+leader",
+          i = { name = "insert single character before cursor." },
+          a = { name = "insert single character after cursor." }
+        },
+        ["z"] = { name = "+fold" }
+      })
+
+    end
+  }
 } -- End plugins manager
