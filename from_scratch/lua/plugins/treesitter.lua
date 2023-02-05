@@ -13,6 +13,7 @@ return {
         'python',
         'markdown',
         'go',
+        'toml',
         -- Web development
         'html',
         'css',
