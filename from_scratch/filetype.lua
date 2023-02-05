@@ -1,9 +1,11 @@
 -- [[ $XDG_CONFIG_HOME/nvim/ ]]
 vim.filetype.add {
   filename = {
-    ['Jenkinsfile'] ='groovy',
-    ['tf'] = 'terraform'
-  }
+    ['Jenkinsfile'] ='groovy'
+  },
+  extension = {
+    tf = 'terraform'
+  },
 }
 -- Setup functions to call depends on filetype
 vim.api.nvim_create_autocmd("FileType", {
