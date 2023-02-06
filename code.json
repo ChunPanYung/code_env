@@ -1,0 +1,78 @@
+{
+    // Basic Setting
+    "editor.renderFinalNewline": "off",
+    "editor.renderWhitespace": "trailing",
+    "editor.wordWrap": "on",
+    "editor.rulers": [{ "column": 80 }],
+
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+
+    "git.enableSmartCommit": true,
+    "git.autofetch": true,
+    "git.confirmSync": false,
+
+    "terminal.integrated.confirmOnExit": "hasChildProcesses",
+
+    "window.restoreWindows": "none",
+
+    "workbench.editor.enablePreview": false,
+
+    // Filetype-specific setting
+    "[ansible][html][javascript][yaml]": {
+        "editor.tabSize": 2
+    },
+    "[markdown][json]": {
+        "editor.tabSize": 4
+    },
+    // Color Customization
+    "workbench.colorCustomizations": {
+        "editorWhitespace.foreground": "#ff00d4"
+    },
+    // Plugins: vscodevim
+    "redhat.telemetry.enabled": true,
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["<Leader>", "i"],
+            "after": ["i", "_", "<Esc>", "r"]
+        },
+        {
+            "before": ["<Leader>", "a"],
+            "after": ["a", "_", "<Esc>", "r"]
+        },
+        {
+            "before": ["j"],
+            "after": ["g", "j"]
+        },
+        {
+            "before": ["k"],
+            "after": ["g", "k"]
+        },
+        {
+            "before": ["<Leader>", "q"],
+            "commands": [":bdelete"]
+        }
+    ],
+    "vim.normalModeKeyBindings": [
+        {
+            "before": ["<S-l>"],
+            "after": ["g", "t"]
+        },
+        {
+            "before": ["<S-h>"],
+            "after": ["g", "T"]
+        },
+        {
+            "before": ["<C-l>"],
+            "commands": [":nohl"]
+        }
+    ],
+    // Workspace Settings
+    "remote.SSH.remotePlatform": {
+        "cloud.lan": "linux"
+    },
+    "editor.accessibilitySupport": "off",
+    "workbench.startupEditor": "none",
+}
