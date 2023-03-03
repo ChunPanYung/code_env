@@ -37,7 +37,7 @@ vim.opt.termguicolors = true
 
 set.completeopt = 'menuone,noselect'
 
-vim.o.exrc = true -- Enable local directory settings
+vim.opt.exrc = true -- Enable local directory settings
 
 -- [[ Tab & Indent ]]
 set.expandtab = true
@@ -84,9 +84,8 @@ vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {
 
 -- [[ folding settings (press za to toggle folds) ]]
 set.foldmethod = 'indent'  -- Fold based on indent
-set.foldnestmax = 10       -- Deepest fold is 10 levels
 set.foldenable = false     -- Dont fold by default
-set.foldlevel= 1           -- Don't fold the root level
+set.foldlevel = 1           -- Don't fold the root level
 
 -- [[ Netrw: built-in file browser setup ]]
 vim.g['netrw_liststyle'] = 3      -- tree list view in netrw
