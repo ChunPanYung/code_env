@@ -14,8 +14,8 @@ keymap("i", "<C-s>", "<Esc>:write<CR>i", { silent = true }) -- map <M-BS> to del
 keymap("n", "<C-_>", "gcc", { silent = true }) -- Map <C-_> and <C-/> to gcc
 -- [[ insert single character before cursor ]]
 vim.cmd([[
-nnoremap <Leader>i :exec "normal i".nr2char(getchar())."\e"<CR>
-nnoremap <Leader>a :exec "normal a".nr2char(getchar())."\e"<CR>
+nnoremap ,i :exec "normal i".nr2char(getchar())."\e"<CR>
+nnoremap ,a :exec "normal a".nr2char(getchar())."\e"<CR>
 ]])
 
 -- move up/down by visual line instead of text line
