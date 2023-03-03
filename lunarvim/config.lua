@@ -82,6 +82,7 @@ lvim.builtin.lir.active = false
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
   "c",
+  "hcl",
   "javascript",
   "json",
   "lua",
