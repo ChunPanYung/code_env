@@ -24,6 +24,34 @@ return {
       local lsp = require('lsp-zero')
       lsp.preset('recommended')
 
+      -- Setup vscode like key mappings
+      local cmp = require 'cmp'
+      local luasnip = require 'luasnip'
+      lsp.setup_nvim_cmp({
+        mapping = lsp.defaults.cmp_mappings({
+          ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
+          ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
+          ['<Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+              luasnip.expand_or_jump()
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
+          ['<S-Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
+        })
+      })
+
       -- See :help lsp-zero-preferences
       lsp.set_preferences({
         set_lsp_keymaps = true, -- set to false if you want to configure your own keybindings
