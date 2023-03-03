@@ -1,8 +1,20 @@
--- Run 'plugins.lua' if exists
-local config_path = vim.fn.stdpath 'config' .. '/lua/plugins.lua'
-if vim.fn.findfile(config_path) then
-  require('plugins')
+-- [[ lazy.nvim ]]
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+
+vim.opt.rtp:prepend(lazypath)
+-- Load all *.lua within ~/.config/nvim/lua/plugins/
+require("lazy").setup("plugins")
 
 -- Run 'keymaps.lua' if exists
 local keymap_path = vim.fn.stdpath 'config' .. '/lua/keymaps.lua'
@@ -21,9 +33,11 @@ set.colorcolumn = '80'
 set.mouse = 'a'
 
 set.syntax = 'on'
-set.termguicolors = true
+vim.opt.termguicolors = true
 
 set.completeopt = 'menuone,noselect'
+
+vim.opt.exrc = true -- Enable local directory settings
 
 -- [[ Tab & Indent ]]
 set.expandtab = true
@@ -43,9 +57,8 @@ set.ignorecase = true
 set.smartcase = true
 
 -- [[ Display invisible characters ]]
--- turn on: set list
--- turn off: set list!
-set.listchars = {eol = '↲', tab = '--▸', space = '·', trail = '·'}
+set.listchars = { trail = '·', tab = '» ' }
+vim.opt.list = true
 
 -- [[ pop up menu ]]
 set.pumheight = 20
@@ -71,9 +84,8 @@ vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {
 
 -- [[ folding settings (press za to toggle folds) ]]
 set.foldmethod = 'indent'  -- Fold based on indent
-set.foldnestmax = 10       -- Deepest fold is 10 levels
 set.foldenable = false     -- Dont fold by default
-set.foldlevel= 1           -- Don't fold the root level
+set.foldlevel = 1           -- Don't fold the root level
 
 -- [[ Netrw: built-in file browser setup ]]
 vim.g['netrw_liststyle'] = 3      -- tree list view in netrw
@@ -101,28 +113,22 @@ vim.opt.undofile = true
 vim.cmd([[
 " autoread and load file when focus on buffer
 au FocusGained,BufEnter * :silent! !
-
-" Vertical split on help
-augroup vimrc_help
-    autocmd!
-    autocmd BufEnter *.txt if &buftype == 'help' | wincmd L | endif
-augroup END
 ]])
 
 --[[ Setup highlight, match function will call per buffer.
      Otherwise it will not work.
 --]]
-vim.cmd([[
-  highlight ExtraWhitespace ctermbg=LightMagenta guibg=LightMagenta
-]])
+-- vim.cmd([[
+--   highlight ExtraWhitespace ctermbg=LightMagenta guibg=LightMagenta
+-- ]])
 -- Ensure trailing white spaces will be highlighted.
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-  pattern = { "*" },
-  command = [[match ExtraWhitespace /\s\+$/]]
-})
+-- vim.api.nvim_create_autocmd({ "BufEnter" }, {
+--   pattern = { "*" },
+--   command = [[match ExtraWhitespace /\s\+$/]]
+-- })
 
 --[[ User Created Commands ]]
-vim.api.nvim_create_user_command('TrimBlank', function()
+vim.api.nvim_create_user_command('Trimblank', function()
   vim.cmd([[
     " Replace multiple blank lines with a single blank line
     silent! %s/\(\n\n\)\n\+/\1/
@@ -133,7 +139,7 @@ vim.api.nvim_create_user_command('TrimBlank', function()
   ]])
 end, {})
 
-vim.api.nvim_create_user_command('TrimSpace', function()
+vim.api.nvim_create_user_command('Trimspace', function()
   vim.cmd([[
     " Remove trailing white spaces
     %s/\s\+$//e
