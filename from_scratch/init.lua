@@ -46,41 +46,32 @@ set.softtabstop = 2
 
 set.tabstop = 2
 set.smartindent = true
+set.autoindent = true
 set.breakindent = true
 
 -- [[ Line Break ]]
 set.linebreak = true
 set.showbreak = '↪'
 
--- [[ Case insensitive searching unless /C or captial in search ]]
-set.ignorecase = true
-set.smartcase = true
-
 -- [[ Display invisible characters ]]
 set.listchars = { trail = '·', tab = '» ' }
 vim.opt.list = true
 
--- [[ pop up menu ]]
-set.pumheight = 20
-
--- [[ highlight: use different color than specify by colorscheme ]]
-vim.cmd([[
-  " Set invisible characters' color
-  highlight Nontext    ctermfg=DarkGray guifg=DarkGray
-  highlight SpecialKey ctermfg=DarkGray guifg=DarkGray
-
-  " Set popup menu background color
-  highlight Pmenu           ctermbg=Black    guibg=Black
-]])
+vim.cmd.colorscheme('habamax')
 
 -- [[ Diagnostic Settings ]]
 vim.diagnostic.config({
-  virtual_text = false -- disable diagnostic message on the right side
+  virtual_text = false, -- disable diagnostic message on the right side
+  float = { border = "rounded" }
 })
 
 -- Show line diagnostics automatically in hover window
 vim.o.updatetime = 250
-vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+vim.api.nvim_create_autocmd({"CursorHold", "CursorHoldI"}, {
+  callback = function()
+    vim.diagnostic.open_float(nil, {focus=false})
+  end
+})
 
 -- [[ folding settings (press za to toggle folds) ]]
 set.foldmethod = 'indent'  -- Fold based on indent
@@ -97,35 +88,12 @@ vim.cmd([[
 autocmd TermOpen * setlocal nonumber norelativenumber
 ]])
 
-vim.cmd([[
-  silent !mkdir ~/.cache/nvim/backup > /dev/null 2>&1
-
-  set backupcopy=yes " Overwrite the original backup file
-  au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
-]])
-
-local HOME = os.getenv('HOME')
-set.backupdir = HOME .. '/.cache/nvim/backup/'
-set.backup = true
-set.writebackup = true
 vim.opt.undofile = true
 
 vim.cmd([[
 " autoread and load file when focus on buffer
 au FocusGained,BufEnter * :silent! !
 ]])
-
---[[ Setup highlight, match function will call per buffer.
-     Otherwise it will not work.
---]]
--- vim.cmd([[
---   highlight ExtraWhitespace ctermbg=LightMagenta guibg=LightMagenta
--- ]])
--- Ensure trailing white spaces will be highlighted.
--- vim.api.nvim_create_autocmd({ "BufEnter" }, {
---   pattern = { "*" },
---   command = [[match ExtraWhitespace /\s\+$/]]
--- })
 
 --[[ User Created Commands ]]
 vim.api.nvim_create_user_command('Trimblank', function()
