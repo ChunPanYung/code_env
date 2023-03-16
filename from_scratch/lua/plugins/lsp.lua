@@ -17,8 +17,11 @@ return {
       -- Snippets
       {'L3MON4D3/LuaSnip'},             -- Required
       {'rafamadriz/friendly-snippets'}, -- Optional
+
+      {'folke/neodev.nvim'},
     },
     config = function()
+      require('neodev').setup({})
       -- Learn the keybindings, see :help lsp-zero-keybindings
       -- Learn to configure LSP servers, see :help lsp-zero-api-showcase
       local lsp = require('lsp-zero')
